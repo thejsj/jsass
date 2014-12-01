@@ -1,8 +1,11 @@
 var should = require('should');
 var expect = require('chai').expect;
+var path = require('path');
 
 var jsass = require('../../src/index');
 var outputCompare = require('../utils/outputCompare');
+
+var testSCSSPath = path.resolve(__dirname + '/../test-scss/');
 
 describe('Basics', function () {
   xit('should return errors using the error attribute', function (done) {
@@ -49,7 +52,7 @@ describe('Basics', function () {
 
   it('should take a file attribute', function (done) {
     jsass.render({
-      file: '/test/test-scss/basic.scss',
+      file: testSCSSPath + '/basic.scss',
       error: function () {
         expect(true).to.equal(false);
         done();

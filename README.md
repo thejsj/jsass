@@ -6,11 +6,11 @@ A SASS compiler written entirely in JavaScript.
 ### Project Scope
 
 - [ ] SASS Compiler
-  - [ ] CSS to CSS
-    - [ ] Output Styles
-      - [ ] Nested
-      - [ ] Expanded
-      - [ ] Compact
+  - [x] CSS to CSS
+    - [x] Output Styles
+      - [x] Nested
+      - [ ] Expanded ([Not Implemented in node-sass](https://www.npmjs.org/package/node-sass#outputstyle))
+      - [ ] Compact ([Not Implemented in node-sass](https://www.npmjs.org/package/node-sass#outputstyle))
       - [ ] Compressed
   - [ ] Nesting `{ {} { {} {} } }`
     - [ ] Bracket Nesting
