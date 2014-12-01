@@ -3,7 +3,6 @@ var expect = require('chai').expect;
 var path = require('path');
 
 var jsass = require('../../src/index');
-var outputCompare = require('../utils/outputCompare');
 
 var testSCSSPath = path.resolve(__dirname + '/../test-scss/');
 

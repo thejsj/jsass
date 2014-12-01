@@ -1,8 +1,20 @@
+var _ = require('lodash');
+var should = require('should');
+var expect = require('chai').expect;
+
 var sass = require('node-sass');
 var jsass = require('../../src/index');
-var _ = require('lodash');
 
-outputCompare = function (dataObject, cb) {
+var compareFileOutput = function (filePath, done) {
+  getOutputStrings({
+    file: filePath
+  }, function (sassString, jsassString) {
+    expect(jsassString).to.equal(sassString);
+    done();
+  });
+};
+
+getOutputStrings = function (dataObject, cb) {
   var __self = {};
   var nodeSassOutput, jSassOutput;
 
@@ -35,4 +47,7 @@ outputCompare = function (dataObject, cb) {
   __self.renderNodeSass();
 };
 
-module.exports = outputCompare;
+module.exports = {
+  'getOutputStrings': getOutputStrings,
+  'compareFileOutput': compareFileOutput,
+};
