@@ -1,0 +1,21 @@
+{
+  "name": "jSASS",
+  "version": "1.0.0",
+  "description": "A Pure JavaScript Compiler",
+  "main": "compiler.js",
+  "scripts": {
+    "test": "mocha test/."
+  },
+  "keywords": [
+    "sass",
+    "javascript"
+  ],
+  "author": "thejsj",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "lodash": "^2.4.1",
+    "node-sass": "^1.2.3",
+    "should": "^4.3.0"
+  }
+}
