@@ -1,0 +1,29 @@
+.valid-css {
+  font-size: 10px;
+  color: #00bb00;
+  background: url('hello.png');
+  .valid-css-child {
+    font-size: 12px;
+    color: red;
+    .yet-another-child {
+      color: black;
+    }
+    .yet-another-another-child {
+      color: blue;
+    }
+  }
+}
+
+.other-valid-css {
+  border: 10px green solid;
+  .child {
+    border-color: red;
+    .super-child {
+      border-color: black;
+      border-size: 3px;
+    }
+    .super-duper-child {
+      border-top: 3px;
+    }
+  }
+}

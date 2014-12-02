@@ -12,7 +12,7 @@ jsass.render = function (jobObject) {
 
 jsass.compileSCSSStringIntoCSS = function (jobObject, scssString) {
   var scssObjects = this.parseSCSSString(scssString);
-  var _resultScssString = this.stringifySCSS(scssObjects);
+  var _resultScssString = this.stringifySCSS(scssObjects, -1);
   jobObject.success(_resultScssString);
 };
 
@@ -42,8 +42,12 @@ jsass.parseSCSSString = function (str, selector, parent) {
     // Opening/Closing Brackets
     else if (ch === '{') {
       object_bracket_count += 1;
-      curr_block = '';
       object_open = true;
+      if (object_bracket_count === 0) {
+        curr_block = '';
+      } else if (object_bracket_count !== 1) {
+        curr_block += ch;
+      }
     } else if (ch === '}') {
       object_bracket_count -= 1;
       if (object_bracket_count === 0) {
@@ -54,6 +58,8 @@ jsass.parseSCSSString = function (str, selector, parent) {
         curr_block = '';
         curr_property = '';
         object_open = false;
+      } else {
+        curr_block += ch;
       }
     } else {
       // Appending Chars
@@ -77,23 +83,43 @@ jsass.parseProperty = function (str) {
   };
 };
 
-jsass.stringifySCSS = function (scssTree) {
+jsass.stringifySCSS = function (scssTree, indentationLevel) {
   var str = '';
   var first = true;
+  var _il = indentationLevel;
+  var i = function (level) {
+    var indentation = '';
+    for (var ii = 0; ii < (level * 2); ii += 1) {
+      indentation += ' ';
+    }
+    return indentation;
+  };
   if (scssTree.selector !== null && scssTree.selector !== undefined) {
-    str += scssTree.selector + ' {';
-    for (var i = 0; i < scssTree.properties.length; i += 1) {
-      var p = scssTree.properties[i];
-      str += '\n  ' + p.key + ': ' + p.value + ';';
+    str += i(_il) + this.getSelector(scssTree) + ' {';
+    for (var z = 0; z < scssTree.properties.length; z += 1) {
+      var p = scssTree.properties[z];
+      str += '\n' + i(_il) + '  ' + p.key + ': ' + p.value + ';';
     }
     str += ' }\n';
   }
   for (var j = 0; j < scssTree.children.length; j += 1) {
-    if (!first) str += '\n';
+    if (!first && indentationLevel < 1) str += '\n';
     if (first) first = false;
-    str += jsass.stringifySCSS(scssTree.children[j]);
+    str += jsass.stringifySCSS(scssTree.children[j], indentationLevel + 1);
   }
   return str;
+};
+
+jsass.getSelector = function (scssTree) {
+  var selector = '';
+  if (scssTree.selector !== null && scssTree.selector !== undefined) {
+    if (scssTree.parent.selector !== null && scssTree.parent.selector !== undefined) {
+      selector = this.getSelector(scssTree.parent) + ' ' + scssTree.selector;
+    } else {
+      selector = scssTree.selector;
+    }
+  }
+  return selector.trim();
 };
 
 jsass.loadFile = function (fileName, callback) {
