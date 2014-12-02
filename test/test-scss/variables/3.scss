@@ -1,0 +1,8 @@
+body {
+  $example3: blue !global;
+  color: $example3;
+}
+
+h2 {
+  color: $example3;
+}

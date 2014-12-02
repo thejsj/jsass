@@ -51,7 +51,7 @@ describe('Basics', function () {
 
   it('should take a file attribute', function (done) {
     jsass.render({
-      file: testSCSSPath + '/basic.scss',
+      file: testSCSSPath + '/basic/1.scss',
       error: function () {
         expect(true).to.equal(false);
         done();

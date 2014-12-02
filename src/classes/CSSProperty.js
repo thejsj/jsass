@@ -1,3 +1,5 @@
+var utils = require('../utils');
+
 var CSSProperty = function (str) {
   this.isCssProperty = true;
   this.isTree = false;
@@ -16,8 +18,16 @@ CSSProperty.prototype.parse = function (str) {
   };
 };
 
-CSSProperty.prototype.getString = function () {
-  return this.key + ': ' + this.value + ';';
+CSSProperty.prototype.getString = function (indentationLevel, scssTree) {
+  return this.key + ': ' + this.getValue(this.value, scssTree) + ';';
+};
+
+CSSProperty.prototype.getValue = function (val, scssTree) {
+  if (utils.isVariable(val)) {
+    var varName = utils.getVariableName(val);
+    return utils.getVariableValue(varName, scssTree);
+  }
+  return val;
 };
 
 module.exports = CSSProperty;

@@ -3,4 +3,5 @@ describe('Render', function () {
   require('./css-to-css');
   require('./nesting');
   require('./comments');
+  require('./variables');
 });

@@ -17,12 +17,15 @@ A SASS compiler written entirely in JavaScript.
     - [x] Parent Selectors (`&:`)
     - [x] Nested Properties
     - [ ] Comma Separated Properties
-  - [ ] Comments 
+  - [x] Comments 
     - [x] Inline Comments
-    - [ ] Multiline Comments (Implemented, but incorrect indentation)
+    - [x] Multiline Comments (Implemented, but incorrect indentation)
     - Monday Night  
-  - [ ] Variables (`$`)
-    - [ ] Global variables (`!global`)
+  - [x] Variables (`$`)
+    - [x] Global variables (`!global`) (Implemented, but not tested throughly since this doesn't work in node-sass)
+  - [ ] `@mixin` and `@include`
+  - Tuesday Lunch
+  - [ ] String interpolation (`#{ $var }`)
   - [ ] Data Types
     - [ ] Numbers
     - [ ] Strings (with or without quotes)
@@ -31,9 +34,6 @@ A SASS compiler written entirely in JavaScript.
     - [ ] Null (null)
     - [ ] List Values (e.g. 1.5em 1em 0 2em, Helvetica, Arial, sans-serif)
     - [ ] Maps
-  - Tuesday Lunch
-  - [ ] String interpolation (`#{ $var }`)
-  - [ ] `@mixin` and `@include`
   - [ ] Operations
    - [ ] All Types (`==`, `!=`)
    - [ ] Numbers (`+`, `-`, `*`, `/`, `%`, `>=`, `<=`,`>`, `<`)

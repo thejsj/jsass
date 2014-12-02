@@ -1,7 +1,9 @@
 var fs = require('fs');
 
+var utils = require('./utils');
 var MultiLineComment = require('./classes/MultiLineComment');
 var CSSProperty = require('./classes/CSSProperty');
+var SCSSVariable = require('./classes/SCSSVariable');
 
 var jsass = {};
 
@@ -34,7 +36,7 @@ jsass.parseSCSSString = function (str, selector, parent) {
   result.parent = parent;
   result.selector = selector;
 
-  result.getString = function (indentationLevel) {
+  result.getString = function (indentationLevel, scssTree) {
     return jsass.stringifySCSS(result, indentationLevel);
   };
 
@@ -71,7 +73,16 @@ jsass.parseSCSSString = function (str, selector, parent) {
       }
       // If finishing statement
       else if (ch === ';' && !object_open) {
-        result.properties.push(new CSSProperty(curr_property));
+        if (utils.isVariable(curr_property)) {
+          var scssVariable = new SCSSVariable(curr_property);
+          if (scssVariable.isGlobal()) {
+            utils.addToGlobaContext(scssVariable, result);
+          } else {
+            result._context[scssVariable.key] = scssVariable;
+          }
+        } else {
+          result.properties.push(new CSSProperty(curr_property));
+        }
         curr_property = '';
       }
       // Opening/Closing Brackets
@@ -146,12 +157,12 @@ jsass.loopThrough = function (isTree, indentation) {
       if (_t.isTree === isTree) {
         if (_t.isTree) {
           if (!first && (!prevElIsTree || _il === -1)) str += '\n';
-          str += _t.getString(_il + 1);
+          str += _t.getString(_il + 1, scssTree);
         } else {
           if (_il > -1) str += '\n';
           str += i(_il);
           if (_il > -1) str += indentation;
-          str += _t.getString(_il + 1);
+          str += _t.getString(_il + 1, scssTree);
         }
         if (first) first = false;
       }

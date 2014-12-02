@@ -21,15 +21,15 @@ describe('CSS to CSS', function () {
   });
 
   it('should take straight CSS from a file and indent it in the corresponding output style', function (done) {
-    compareFileOutput(testSCSSPath + '/basic.scss', done);
+    compareFileOutput(testSCSSPath + '/basic/1.scss', done);
   });
 
   it('should take CSS with multiple properties and output it correctly', function (done) {
-    compareFileOutput(testSCSSPath + '/basic-2.scss', done);
+    compareFileOutput(testSCSSPath + '/basic/2.scss', done);
   });
 
   it('should take CSS with multiple properties and output it correctly', function (done) {
-    compareFileOutput(testSCSSPath + '/basic-3.scss', done);
+    compareFileOutput(testSCSSPath + '/basic/3.scss', done);
   });
 
 });
