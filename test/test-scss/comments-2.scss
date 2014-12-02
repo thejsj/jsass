@@ -1,5 +1,6 @@
 // This should be ignored
-/* This should not be ignored */
-.valid-css { font-zize: 10px; }
-/* This should not be ignored */
+.valid-css {
+  /* This should not be ignored */
+  font-zize: 10px;
+}
 // This should be ignored

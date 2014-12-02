@@ -142,13 +142,16 @@ jsass.loopThrough = function (isTree, indentation) {
     var prevTree = false;
     for (var ii = 0; ii < scssTree.properties.length; ii += 1) {
       var _t = scssTree.properties[ii];
-      var prevElIsTree = prevTree && prevTree.isTree;
+      var prevElIsTree = prevTree && (prevTree.isTree || prevTree.isComment);
       if (_t.isTree === isTree) {
         if (_t.isTree) {
-          if (!first && !(prevElIsTree && _il > -1)) str += '\n';
+          if (!first && (!prevElIsTree || _il === -1)) str += '\n';
           str += _t.getString(_il + 1);
         } else {
-          str += '\n' + i(_il) + indentation + _t.getString(_il + 1);
+          if (_il > -1) str += '\n';
+          str += i(_il);
+          if (_il > -1) str += indentation;
+          str += _t.getString(_il + 1);
         }
         if (first) first = false;
       }
