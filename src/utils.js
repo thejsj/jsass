@@ -28,4 +28,16 @@ utils.addToGlobaContext = function (scssVar, tree) {
   return utils.addToGlobaContext(scssVar, tree.parent);
 };
 
+utils.isMixin = function (str) {
+  return str.trim().slice(0, 6) === '@mixin';
+};
+
+utils.isInclude = function (str) {
+  return str.trim().slice(0, 8) === '@include';
+};
+
+utils.addMixin = function (property_name, curr_block, result) {
+  return true;
+};
+
 module.exports = utils;

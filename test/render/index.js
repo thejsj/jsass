@@ -4,4 +4,5 @@ describe('Render', function () {
   require('./nesting');
   require('./comments');
   require('./variables');
+  require('./mixins');
 });

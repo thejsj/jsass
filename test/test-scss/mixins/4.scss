@@ -1,0 +1,18 @@
+@mixin silly-links ($color){
+  background-color: $color;
+  p {
+    border-color: $color;
+  }
+}
+body {
+  color: black;
+  @include silly-links(white);
+}
+
+html {
+  @include silly-links(red);
+}
+
+.some-div {
+  @include silly-links(blue);
+}

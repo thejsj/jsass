@@ -24,6 +24,12 @@ A SASS compiler written entirely in JavaScript.
   - [x] Variables (`$`)
     - [x] Global variables (`!global`) (Implemented, but not tested throughly since this doesn't work in node-sass)
   - [ ] `@mixin` and `@include`
+    - [ ] Declare `@mixin`s
+    - [ ] Include `@mixin` through `@include`
+    - [ ] `@mixins` with variables
+    - [ ] Unlimited arguments
+    - [ ] Nested `@mixin`s
+    - [ ] Should pass the `@content` into the mixin
   - Tuesday Lunch
   - [ ] String interpolation (`#{ $var }`)
   - [ ] Data Types

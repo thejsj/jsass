@@ -1,0 +1,9 @@
+@mixin silly-links {
+  p {
+    background-color: white;
+  }
+}
+body {
+  color: black;
+  @include silly-links();
+}

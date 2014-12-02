@@ -1,0 +1,16 @@
+@mixin silly-links {
+  p {
+    background-color: white;
+    a {
+      color: blue;
+      background-color: red;
+      &:hover {
+        color: red;
+      }
+    }
+  }
+}
+body {
+  color: black;
+  @include silly-links();
+}

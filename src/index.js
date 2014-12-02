@@ -73,7 +73,9 @@ jsass.parseSCSSString = function (str, selector, parent) {
       }
       // If finishing statement
       else if (ch === ';' && !object_open) {
-        if (utils.isVariable(curr_property)) {
+        if (utils.isInclude(curr_property)) {
+
+        } else if (utils.isVariable(curr_property)) {
           var scssVariable = new SCSSVariable(curr_property);
           if (scssVariable.isGlobal()) {
             utils.addToGlobaContext(scssVariable, result);
@@ -98,8 +100,13 @@ jsass.parseSCSSString = function (str, selector, parent) {
         object_bracket_count -= 1;
         if (object_bracket_count === 0) {
           if (curr_block.trim() !== '') {
+            console.log(curr_property);
             var property_name = curr_property.trim();
-            result.properties.push(this.parseSCSSString(curr_block, property_name, result));
+            if (utils.isMixin(property_name)) {
+              utils.addMixin(property_name, curr_block, result);
+            } else {
+              result.properties.push(this.parseSCSSString(curr_block, property_name, result));
+            }
           }
           curr_block = '';
           curr_property = '';
