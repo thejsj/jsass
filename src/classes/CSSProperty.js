@@ -10,7 +10,6 @@ var CSSProperty = function (str) {
 
 CSSProperty.prototype.parse = function (str) {
   var _property = str.split(":");
-  console.log(_property);
   var key = _property[0].trim();
   var value = _property[1].trim();
   return {

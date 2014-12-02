@@ -100,7 +100,6 @@ jsass.parseSCSSString = function (str, selector, parent) {
         object_bracket_count -= 1;
         if (object_bracket_count === 0) {
           if (curr_block.trim() !== '') {
-            console.log(curr_property);
             var property_name = curr_property.trim();
             if (utils.isMixin(property_name)) {
               utils.addMixin(property_name, curr_block, result);
