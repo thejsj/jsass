@@ -1,12 +1,16 @@
-.valid-css, .super-valid-css {
+.valid-css {
   font-size: 10px;
-  color: #00bb00;
   background: url('hello.png');
-  .valid-css-child, .hello {
+  .valid-css-child {
     font-size: 12px;
     color: red;
-    .trying  {
-      color: black;
-    }
+  }
+  color: #00bb00;
+  .trying  {
+    color: black;
+  }
+  background-color: green;
+  .hello {
+    color: green;
   }
 }

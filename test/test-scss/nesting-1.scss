@@ -7,3 +7,10 @@
     color: red;
   }
 }
+
+.other-valid-css {
+  border: 10px green solid;
+  .child {
+    border-color: red;
+  }
+}

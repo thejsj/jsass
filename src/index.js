@@ -124,38 +124,41 @@ jsass.stringifySCSS = function (scssTree, indentationLevel) {
   var first = true;
   var _il = indentationLevel;
   if (scssTree.selector !== null && scssTree.selector !== undefined) {
-    str += i(indentationLevel) + this.getSelector(scssTree) + ' {';
-    str += this.loopThroughProperties(scssTree, _il, false);
+    str += i(_il) + this.getSelector(scssTree) + ' {';
+    str += this.loopThroughProperties(scssTree, _il);
     str += ' }\n';
   } else {
-    str += this.loopThroughProperties(scssTree, _il, true);
+    str += this.loopThroughProperties(scssTree, _il);
   }
   str += this.loopThroughTrees(scssTree, _il);
   return str;
 };
 
-jsass.loopThrough = function (isTree, indentation, includeNewLine) {
+jsass.loopThrough = function (isTree, indentation) {
   indentation = indentation || '';
-  return function (scssTree, _il, _includeNewLine) {
+  return function (scssTree, _il) {
     var str = '';
     var first = true;
     var prevTree = false;
-    includeNewLine = _includeNewLine || includeNewLine;
     for (var ii = 0; ii < scssTree.properties.length; ii += 1) {
       var _t = scssTree.properties[ii];
       var prevElIsTree = prevTree && prevTree.isTree;
       if (_t.isTree === isTree) {
-        if ((!first || includeNewLine) && !(prevElIsTree && _il > 0)) str += '\n';
+        if (_t.isTree) {
+          if (!first && !(prevElIsTree && _il > -1)) str += '\n';
+          str += _t.getString(_il + 1);
+        } else {
+          str += '\n' + i(_il) + indentation + _t.getString(_il + 1);
+        }
         if (first) first = false;
-        str += i(_il) + indentation + _t.getString(_il + 1);
       }
       prevTree = _t;
     }
     return str;
   };
 };
-jsass.loopThroughProperties = jsass.loopThrough(false, '  ', true);
-jsass.loopThroughTrees = jsass.loopThrough(true, '', false);
+jsass.loopThroughProperties = jsass.loopThrough(false, '  ');
+jsass.loopThroughTrees = jsass.loopThrough(true, '');
 
 jsass.getSelector = function (scssTree) {
   var selector = '';

@@ -10,6 +10,12 @@
     }
     .yet-another-another-child {
       color: blue;
+      a {
+        color: black;
+        span {
+          color: blue;
+        }
+      }
     }
   }
 }

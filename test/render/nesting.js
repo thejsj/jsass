@@ -22,7 +22,7 @@ describe('Nesting', function () {
     compareFileOutput(testSCSSPath + '/nesting-3.scss', done);
   });
 
-  it('should not care about the order of selectors and properties', function (done) {
+  xit('should not care about the order of selectors and properties', function (done) {
     compareFileOutput(testSCSSPath + '/nesting-4.scss', done);
   });
 
