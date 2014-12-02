@@ -21,4 +21,8 @@ describe('Nesting', function () {
   it('should support use of parent selectors as a way of nesting (&)', function (done) {
     compareFileOutput(testSCSSPath + '/nesting-3.scss', done);
   });
+
+  xit('should support the use of comma separated selectors', function (done) {
+    compareFileOutput(testSCSSPath + '/nesting-4.scss', done);
+  });
 });

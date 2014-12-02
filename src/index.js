@@ -1,4 +1,6 @@
 var jsass = {};
+var MultiLineComment = require('./classes/MultiLineComment');
+var CSSProperty = require('./classes/CSSProperty');
 var fs = require('fs');
 
 jsass.render = function (jobObject) {
@@ -12,11 +14,14 @@ jsass.render = function (jobObject) {
 
 jsass.compileSCSSStringIntoCSS = function (jobObject, scssString) {
   var scssObjects = this.parseSCSSString(scssString);
+  console.log(scssObjects);
   var _resultScssString = this.stringifySCSS(scssObjects, -1);
   jobObject.success(_resultScssString);
 };
 
 /**
+ * Parse a SCSS String with a selector into a SCSS Object Tree
+ *
  * @param <String>
  * @return <Object> An object tree of SCSS Objects
  */
@@ -28,59 +33,74 @@ jsass.parseSCSSString = function (str, selector, parent) {
   result.parent = parent;
   result.selector = selector;
 
+  var inInlineComment = false;
+  var inMultiLineComment = true;
   var object_open = false;
   var object_bracket_count = 0;
   var curr_block = '';
   var curr_property = '';
+
   for (var i = 0; i < str.length; i += 1) {
+    var prevCh = str[i - 1] || '';
+    var nextCh = str[i + 1] || '';
     var ch = str[i];
-    // If finishing statement
-    if (ch === ';' && !object_open) {
-      result.properties.push(this.parseProperty(curr_property));
-      curr_property = '';
+
+    // If inline comment
+    if (inInlineComment && prevCh === "\n") {
+      inInlineComment = false;
+    } else if (!inInlineComment && ch === '/' && nextCh === '/') {
+      // Remove the first char
+      inInlineComment = true;
     }
-    // Opening/Closing Brackets
-    else if (ch === '{') {
-      object_bracket_count += 1;
-      object_open = true;
-      if (object_bracket_count === 0) {
-        curr_block = '';
-      } else if (object_bracket_count !== 1) {
-        curr_block += ch;
-      }
-    } else if (ch === '}') {
-      object_bracket_count -= 1;
-      if (object_bracket_count === 0) {
-        if (curr_block.trim() !== '') {
-          var property_name = curr_property.trim();
-          result.children.push(this.parseSCSSString(curr_block, property_name, result));
-        }
-        curr_block = '';
+
+    if (!inInlineComment) {
+      if (!inMultiLineComment && ch === '/' && nextCh === '*') {
+        inMultiLineComment = true;
         curr_property = '';
-        object_open = false;
-      } else {
-        curr_block += ch;
-      }
-    } else {
-      // Appending Chars
-      if (object_open) {
-        curr_block += ch;
-      } else {
+      } else if (inMultiLineComment && prevCh === '*' && ch === '/') {
+        inMultiLineComment = false;
+        result.properties.push(new MultiLineComment(curr_property));
+      } else if (inMultiLineComment) {
         curr_property += ch;
+      }
+      // If finishing statement
+      else if (ch === ';' && !object_open) {
+        result.properties.push(this.parseProperty(curr_property));
+        curr_property = '';
+      }
+      // Opening/Closing Brackets
+      else if (ch === '{') {
+        object_bracket_count += 1;
+        object_open = true;
+        if (object_bracket_count === 0) {
+          curr_block = '';
+        } else if (object_bracket_count !== 1) {
+          curr_block += ch;
+        }
+      } else if (ch === '}') {
+        object_bracket_count -= 1;
+        if (object_bracket_count === 0) {
+          if (curr_block.trim() !== '') {
+            var property_name = curr_property.trim();
+            result.children.push(this.parseSCSSString(curr_block, property_name, result));
+          }
+          curr_block = '';
+          curr_property = '';
+          object_open = false;
+        } else {
+          curr_block += ch;
+        }
+      } else {
+        // Appending Chars
+        if (object_open) {
+          curr_block += ch;
+        } else {
+          curr_property += ch;
+        }
       }
     }
   }
   return result;
-};
-
-jsass.parseProperty = function (str) {
-  var _property = str.split(":");
-  var key = _property[0].trim();
-  var value = _property[1].trim();
-  return {
-    key: key,
-    value: value
-  };
 };
 
 jsass.stringifySCSS = function (scssTree, indentationLevel) {

@@ -1,0 +1,23 @@
+// This should be ignored
+/* This should not be ignored */
+.valid-css {
+  font-size: 10px;
+  // This should be ignored
+  // font-size: 12px;
+  // color: blue;
+  .super-valid-css {
+    color: red;
+    font-size: 10px;
+  }
+  // .ignored-property {
+  //   color: green;
+  //   background: pink;
+  // }
+  /*
+  .ignored-property {
+    color: blue;
+    background: red;
+  } */
+}
+/* This should not be ignored */
+// This should be ignored

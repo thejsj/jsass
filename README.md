@@ -12,15 +12,17 @@ A SASS compiler written entirely in JavaScript.
       - [ ] Expanded ([Not Implemented in node-sass](https://www.npmjs.org/package/node-sass#outputstyle))
       - [ ] Compact ([Not Implemented in node-sass](https://www.npmjs.org/package/node-sass#outputstyle))
       - [ ] Compressed
-  - [ ] Nesting `{ {} { {} {} } }`
-    - [ ] Bracket Nesting
-    - [ ] Parent Selectors (`&:`)
-    - [ ] Nested Properties
+  - [x] Nesting `{ {} { {} {} } }`
+    - [x] Bracket Nesting
+    - [x] Parent Selectors (`&:`)
+    - [x] Nested Properties
+    - [ ] Comma Separated Properties
   - [ ] Comments 
     - [ ] Inline Comments
     - [ ] Multiline Comments
   - [ ] Variables (`$`)
     - [ ] Global variables (`!global`)
+  - Monday Night
   - [ ] Data Types
     - [ ] Numbers
     - [ ] Strings (with or without quotes)
@@ -31,6 +33,7 @@ A SASS compiler written entirely in JavaScript.
     - [ ] Maps
   - [ ] String interpolation (`#{ $var }`)
   - [ ] `@mixin` and `@include`
+  - Tuesday Lunch
   - [ ] Operations
    - [ ] All Types (`==`, `!=`)
    - [ ] Numbers (`+`, `-`, `*`, `/`, `%`, `>=`, `<=`,`>`, `<`)
@@ -39,6 +42,7 @@ A SASS compiler written entirely in JavaScript.
    - [ ] Boolean (`and`, `or`, `not`)
   - [ ] `@if`
   - [ ] `@for`
+  - Tuesday 4:00 PM
   - [ ] `@import`
   - [ ] `@extend`
     -  [ ] Extending `%`
