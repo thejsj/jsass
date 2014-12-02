@@ -18,8 +18,7 @@ describe('Nesting', function () {
     compareFileOutput(testSCSSPath + '/nesting-2.scss', done);
   });
 
-  it('should the use of parent selectors as a way of nesting', function (done) {
+  it('should support use of parent selectors as a way of nesting (&)', function (done) {
     compareFileOutput(testSCSSPath + '/nesting-3.scss', done);
   });
-
 });

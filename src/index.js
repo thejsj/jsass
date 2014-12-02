@@ -103,7 +103,7 @@ jsass.stringifySCSS = function (scssTree, indentationLevel) {
     str += ' }\n';
   }
   for (var j = 0; j < scssTree.children.length; j += 1) {
-    if (!first && indentationLevel < 1) str += '\n';
+    if (!first && indentationLevel < 0) str += '\n';
     if (first) first = false;
     str += jsass.stringifySCSS(scssTree.children[j], indentationLevel + 1);
   }
@@ -114,7 +114,11 @@ jsass.getSelector = function (scssTree) {
   var selector = '';
   if (scssTree.selector !== null && scssTree.selector !== undefined) {
     if (scssTree.parent.selector !== null && scssTree.parent.selector !== undefined) {
-      selector = this.getSelector(scssTree.parent) + ' ' + scssTree.selector;
+      if (scssTree.selector[0] === '&') {
+        selector = this.getSelector(scssTree.parent) + scssTree.selector.slice(1);
+      } else {
+        selector = this.getSelector(scssTree.parent) + ' ' + scssTree.selector;
+      }
     } else {
       selector = scssTree.selector;
     }
