@@ -1,5 +1,6 @@
 var CSSProperty = function (str) {
   this.isCssProperty = true;
+  this.isTree = false;
   this._property = this.parse(str);
   this.key = this._property.key;
   this.value = this._property.value;
@@ -13,6 +14,10 @@ CSSProperty.prototype.parse = function (str) {
     key: key,
     value: value
   };
+};
+
+CSSProperty.prototype.getString = function () {
+  return this.key + ': ' + this.value + ';';
 };
 
 module.exports = CSSProperty;

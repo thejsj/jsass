@@ -1,7 +1,9 @@
-var jsass = {};
+var fs = require('fs');
+
 var MultiLineComment = require('./classes/MultiLineComment');
 var CSSProperty = require('./classes/CSSProperty');
-var fs = require('fs');
+
+var jsass = {};
 
 jsass.render = function (jobObject) {
   if (typeof jobObject.success !== 'function') throw new Error('Success Method Required');
@@ -14,7 +16,6 @@ jsass.render = function (jobObject) {
 
 jsass.compileSCSSStringIntoCSS = function (jobObject, scssString) {
   var scssObjects = this.parseSCSSString(scssString);
-  console.log(scssObjects);
   var _resultScssString = this.stringifySCSS(scssObjects, -1);
   jobObject.success(_resultScssString);
 };
@@ -27,14 +28,18 @@ jsass.compileSCSSStringIntoCSS = function (jobObject, scssString) {
  */
 jsass.parseSCSSString = function (str, selector, parent) {
   var result = {};
-  result.children = []; // .hello { .hello { } }
+  result.isTree = true;
   result.properties = []; // .hello { font-size: 12px; }
   result._context = {}; // Variables
   result.parent = parent;
   result.selector = selector;
 
+  result.getString = function (indentationLevel) {
+    return jsass.stringifySCSS(result, indentationLevel);
+  };
+
   var inInlineComment = false;
-  var inMultiLineComment = true;
+  var inMultiLineComment = false;
   var object_open = false;
   var object_bracket_count = 0;
   var curr_block = '';
@@ -60,12 +65,13 @@ jsass.parseSCSSString = function (str, selector, parent) {
       } else if (inMultiLineComment && prevCh === '*' && ch === '/') {
         inMultiLineComment = false;
         result.properties.push(new MultiLineComment(curr_property));
+        curr_property = '';
       } else if (inMultiLineComment) {
         curr_property += ch;
       }
       // If finishing statement
       else if (ch === ';' && !object_open) {
-        result.properties.push(this.parseProperty(curr_property));
+        result.properties.push(new CSSProperty(curr_property));
         curr_property = '';
       }
       // Opening/Closing Brackets
@@ -82,7 +88,7 @@ jsass.parseSCSSString = function (str, selector, parent) {
         if (object_bracket_count === 0) {
           if (curr_block.trim() !== '') {
             var property_name = curr_property.trim();
-            result.children.push(this.parseSCSSString(curr_block, property_name, result));
+            result.properties.push(this.parseSCSSString(curr_block, property_name, result));
           }
           curr_block = '';
           curr_property = '';
@@ -103,32 +109,53 @@ jsass.parseSCSSString = function (str, selector, parent) {
   return result;
 };
 
+jsass.renderIndentation = function (level) {
+  var indentation = '';
+  for (var ii = 0; ii < (level * 2); ii += 1) {
+    indentation += ' ';
+  }
+  return indentation;
+};
+// Shortcut
+var i = jsass.renderIndentation;
+
 jsass.stringifySCSS = function (scssTree, indentationLevel) {
   var str = '';
   var first = true;
   var _il = indentationLevel;
-  var i = function (level) {
-    var indentation = '';
-    for (var ii = 0; ii < (level * 2); ii += 1) {
-      indentation += ' ';
-    }
-    return indentation;
-  };
   if (scssTree.selector !== null && scssTree.selector !== undefined) {
-    str += i(_il) + this.getSelector(scssTree) + ' {';
-    for (var z = 0; z < scssTree.properties.length; z += 1) {
-      var p = scssTree.properties[z];
-      str += '\n' + i(_il) + '  ' + p.key + ': ' + p.value + ';';
-    }
+    str += i(indentationLevel) + this.getSelector(scssTree) + ' {';
+    str += this.loopThroughProperties(scssTree, _il, false);
     str += ' }\n';
+  } else {
+    str += this.loopThroughProperties(scssTree, _il, true);
   }
-  for (var j = 0; j < scssTree.children.length; j += 1) {
-    if (!first && indentationLevel < 0) str += '\n';
-    if (first) first = false;
-    str += jsass.stringifySCSS(scssTree.children[j], indentationLevel + 1);
-  }
+  str += this.loopThroughTrees(scssTree, _il);
   return str;
 };
+
+jsass.loopThrough = function (isTree, indentation, includeNewLine) {
+  indentation = indentation || '';
+  return function (scssTree, _il, _includeNewLine) {
+    var str = '';
+    var first = true;
+    var prevTree = false;
+    includeNewLine = _includeNewLine || includeNewLine;
+    for (var ii = 0; ii < scssTree.properties.length; ii += 1) {
+      var _t = scssTree.properties[ii];
+      var prevElIsTree = prevTree && prevTree.isTree;
+      if (_t.isTree === isTree) {
+        if ((!first || includeNewLine) && !(prevElIsTree && _il > 0)) str += '\n';
+        if (first) first = false;
+        str += i(_il) + indentation + _t.getString(_il + 1);
+      }
+      prevTree = _t;
+    }
+    return str;
+  };
+};
+jsass.loopThroughProperties = jsass.loopThrough(false, '  ', true);
+jsass.loopThroughTrees = jsass.loopThrough(true, '', false);
 
 jsass.getSelector = function (scssTree) {
   var selector = '';

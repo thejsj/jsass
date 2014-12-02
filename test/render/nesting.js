@@ -22,7 +22,11 @@ describe('Nesting', function () {
     compareFileOutput(testSCSSPath + '/nesting-3.scss', done);
   });
 
-  xit('should support the use of comma separated selectors', function (done) {
+  it('should not care about the order of selectors and properties', function (done) {
     compareFileOutput(testSCSSPath + '/nesting-4.scss', done);
+  });
+
+  xit('should support the use of comma separated selectors', function (done) {
+    compareFileOutput(testSCSSPath + '/nesting-5.scss', done);
   });
 });
