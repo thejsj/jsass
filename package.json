@@ -13,9 +13,14 @@
   "author": "thejsj",
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^6.3.3",
     "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-watch": "^3.0.0",
     "lodash": "^2.4.1",
     "node-sass": "^1.2.3",
-    "should": "^4.3.0"
+    "should": "^4.3.0",
+    "vinyl-source-stream": "^1.0.0",
+    "sass-js": "https://github.com/medialize/sass.js/archive/v0.5.0.tar.gz"
   }
 }

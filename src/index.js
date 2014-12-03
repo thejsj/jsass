@@ -1,5 +1,3 @@
-var fs = require('fs');
-
 var utils = require('./utils');
 var MultiLineComment = require('./classes/MultiLineComment');
 var CSSProperty = require('./classes/CSSProperty');
@@ -197,14 +195,23 @@ jsass.getSelector = function (scssTree) {
 };
 
 jsass.loadFile = function (fileName, callback) {
-  // This would be different in a browser environment
-  fs.readFile(fileName, function (err, buffer) {
-    if (err) console.log(err);
-    if (callback !== undefined) {
-      callback(buffer.toString());
-    }
-  });
+  var httpRequest;
+  if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+    httpRequest = new XMLHttpRequest();
+  } else if (window.ActiveXObject) { // IE 6 and older
+    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  httpRequest.onreadystatechange = function (response) {
+    console.log('response');
+    console.log(response);
+  };
+  httpRequest.open('GET', fileName, true);
+  httpRequest.send(null);
 };
+
+if (window !== undefined) {
+  window.jsass = jsass;
+}
 
 try {
   if (module !== undefined && module.exports !== undefined) {

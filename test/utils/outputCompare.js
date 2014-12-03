@@ -3,7 +3,7 @@ var should = require('should');
 var expect = require('chai').expect;
 
 var sass = require('node-sass');
-var jsass = require('../../src/index');
+var jsass = require('../../src/nodeCompatible');
 
 var compareFileOutput = function (filePath, done) {
   getOutputStrings({
