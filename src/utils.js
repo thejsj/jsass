@@ -36,7 +36,21 @@ utils.isInclude = function (str) {
   return str.trim().slice(0, 8) === '@include';
 };
 
-utils.addMixin = function (property_name, curr_block, result) {
+utils.getMixinName = function (str) {
+  return str.replace('@mixin', '')
+    .replace(/\({1}[^/)]*\){1}/g, '')
+    .trim();
+};
+
+utils.getIncludeName = function (str) {
+  return str.replace('@include', '')
+    .replace(/\({1}[^/)]*\){1}/g, '')
+    .trim();
+};
+
+utils.addMixin = function (propertyName, block, tree) {
+  var parsedPropertyName = utils.getMixinName(propertyName);
+  tree._mixins[parsedPropertyName] = block;
   return true;
 };
 

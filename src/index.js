@@ -31,6 +31,7 @@ jsass.parseSCSSString = function (str, selector, parent) {
   result.isTree = true;
   result.properties = []; // .hello { font-size: 12px; }
   result._context = {}; // Variables
+  result._mixins = (parent !== undefined) ? parent._mixins : {}; // Variables
   result.parent = parent;
   result.selector = selector;
 
@@ -72,7 +73,12 @@ jsass.parseSCSSString = function (str, selector, parent) {
       // If finishing statement
       else if (ch === ';' && !object_open) {
         if (utils.isInclude(curr_property)) {
-
+          var propertyName = utils.getIncludeName(curr_property);
+          if (result._mixins[propertyName] === undefined) {
+            throw new Error('included mixin doesn\'t exist');
+          }
+          var mixin = result._mixins[propertyName];
+          result.properties.push(this.parseSCSSString(mixin, '', result));
         } else if (utils.isVariable(curr_property)) {
           var scssVariable = new SCSSVariable(curr_property);
           if (scssVariable.isGlobal()) {
@@ -195,23 +201,24 @@ jsass.getSelector = function (scssTree) {
 };
 
 jsass.loadFile = function (fileName, callback) {
-  var httpRequest;
-  if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-    httpRequest = new XMLHttpRequest();
-  } else if (window.ActiveXObject) { // IE 6 and older
-    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  httpRequest.onreadystatechange = function (response) {
-    console.log('response');
-    console.log(response);
-  };
-  httpRequest.open('GET', fileName, true);
-  httpRequest.send(null);
+  // var httpRequest;
+  // if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+  //   httpRequest = new XMLHttpRequest();
+  // } else if (window.ActiveXObject) { // IE 6 and older
+  //   httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+  // }
+  // httpRequest.onreadystatechange = function (response) {
+  //   console.log('response');
+  //   console.log(response);
+  // };
+  // httpRequest.open('GET', fileName, true);
+  // httpRequest.send(null);
 };
-
-if (window !== undefined) {
-  window.jsass = jsass;
-}
+try {
+  if (window !== undefined) {
+    window.jsass = jsass;
+  }
+} catch (err) {}
 
 try {
   if (module !== undefined && module.exports !== undefined) {

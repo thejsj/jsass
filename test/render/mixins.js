@@ -13,19 +13,19 @@ describe('Mixins', function () {
     compareFileOutput(testSCSSPath + '/mixins/1.scss', done);
   });
 
-  xit('should render mixins when asked to', function (done) {
+  it('should render mixins when asked to', function (done) {
     compareFileOutput(testSCSSPath + '/mixins/2.scss', done);
   });
 
-  xit('should render mixins with multiple levels of indentation ', function (done) {
+  it('should render mixins with multiple levels of indentation ', function (done) {
     compareFileOutput(testSCSSPath + '/mixins/3.scss', done);
   });
 
-  xit('should be able to pass arguments into a mixin', function (done) {
+  it('should be able to pass arguments into a mixin', function (done) {
     compareFileOutput(testSCSSPath + '/mixins/4.scss', done);
   });
 
-  xit('should be able to pass keyword arguments into a mixin', function (done) {
+  it('should be able to pass keyword arguments into a mixin', function (done) {
     compareFileOutput(testSCSSPath + '/mixins/5.scss', done);
   });
 

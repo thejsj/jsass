@@ -36,7 +36,7 @@
                 <div class='row'>
                   <div class='col-md-6'>
                     <textarea placeholder='$c: green;
-body{
+body {
     background: $c;
     p {
        color: red;
@@ -49,6 +49,9 @@ body{
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">Compile</button>
+              <button type="submit" class="btn" id='sample-1'>Sample #1</button>
+              <button type="submit" class="btn" id='sample-2'>Sample #2</button>
+              <button type="submit" class="btn" id='sample-3'>Sample #3</button>
             </form>
           </div>
         </div>
@@ -64,7 +67,7 @@ body{
             <pre><code>jsass.render({
   data: '$c: green; body{ background: $c; p { color: red; } }',
   success: function (css) {
-    $compilerResult.val(css);
+    console.log(css);
   },
 });</code></pre>
           </div>
