@@ -20,7 +20,6 @@ A SASS compiler written entirely in JavaScript.
   - [x] Comments 
     - [x] Inline Comments
     - [x] Multiline Comments (Implemented, but incorrect indentation)
-    - Monday Night  
   - [x] Variables (`$`)
     - [x] Global variables (`!global`) (Implemented, but not tested throughly since this doesn't work in node-sass)
   - [ ] `@mixin` and `@include`
