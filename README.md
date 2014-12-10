@@ -3,6 +3,20 @@
 
 A SASS compiler written entirely in JavaScript.
 
+### Why? 
+
+There are many implementations of SASS written in many languages. But there is only one that runs in the browser and it's only a port of C. This is the only one written in pure JavaScript.
+
+### Similar Projects
+
+[sass.js](https://github.com/medialize/sass.js/)
+
+### Online Compiler
+
+Test it out [here](http://hiphipjorge.com/2014/jsass/)
+
+![Screenshot of Online Compiler](screenshot.png)
+
 ### Project Scope
 
 - [ ] SASS Compiler
@@ -53,19 +67,3 @@ A SASS compiler written entirely in JavaScript.
   - [ ] `@each`
   - [ ] `@while`
   - [ ] Output Styles
-
-### Why? 
-
-There are many implementations of SASS written in many languages. But there is only one that runs in the browser and it's only a port of C. This is the only one written in pure JavaScript.
-
-### Similar Projects
-
-[sass.js](https://github.com/medialize/sass.js/)
-
-### Online Compiler
-
-Test it out [here](http://hiphipjorge.com/2014/jsass/)
-
-![Screenshot of Online Compiler](screenshot.png)
-
-
