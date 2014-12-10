@@ -48,19 +48,25 @@ A SASS compiler written entirely in JavaScript.
    - [ ] Boolean (`and`, `or`, `not`)
   - [ ] `@if`
   - [ ] `@for`
-  - Tuesday 4:00 PM
   - [ ] `@import`
   - [ ] `@extend`
     -  [ ] Extending `%`
   - [ ] `@each`
   - [ ] `@while`
   - [ ] Output Styles
-- [ ] Project Site
-    - [ ] Project Description
-        - [ ] Why? 
-        - [ ] Similar Projects
-    - [ ] Online Compiler
-        - [ ] Textarea Compiler
-        - [ ] File Upload Compiler
+
+### Why? 
+
+There are many implementations of SASS written in many languages. But there is only one that runs in the browser and it's only a port of C. This is the only one written in pure JavaScript.
+
+### Similar Projects
+
+[sass.js](https://github.com/medialize/sass.js/)
+
+### Online Compiler
+
+Test it out [here](http://hiphipjorge.com/2014/jsass/)
+
+![Screenshot of Online Compiler](screenshot.png)
 
 
