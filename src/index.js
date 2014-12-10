@@ -144,12 +144,14 @@ jsass.stringifySCSS = function (scssTree, indentationLevel) {
   var str = '';
   var first = true;
   var _il = indentationLevel;
-  if (scssTree.selector !== null && scssTree.selector !== undefined) {
-    str += i(_il) + this.getSelector(scssTree) + ' {';
-    str += this.loopThroughProperties(scssTree, _il);
-    str += ' }\n';
-  } else {
-    str += this.loopThroughProperties(scssTree, _il);
+  if (scssTree.properties.length > 0) {
+    if (scssTree.selector !== null && scssTree.selector !== undefined && scssTree.selector !== '') {
+      str += i(_il) + this.getSelector(scssTree) + ' {';
+      str += this.loopThroughProperties(scssTree, _il);
+      str += ' }\n';
+    } else {
+      str += this.loopThroughProperties(scssTree, _il);
+    }
   }
   str += this.loopThroughTrees(scssTree, _il);
   return str;

@@ -52,8 +52,7 @@ p {\n\
   $sample3 = $('#sample-3');
   $sample3.click(function (e) {
     e.preventDefault();
-    $compilerTextarea.val('\n\
-.container {\n\
+    $compilerTextarea.val('.container {\n\
   .row {\n\
     .col{\n\
       .p {\n\
