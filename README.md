@@ -1,11 +1,11 @@
 
-# JSASS
+# jSass
 
 A SASS compiler written entirely in JavaScript.
 
 ### Why? 
 
-There are many implementations of SASS written in many languages. But there is only one that runs in the browser and it's only a port of C. This is the only one written in pure JavaScript.
+There are many implementations of Sass written in many languages. But there is only one that runs in the browser and it's only a port of C. This is the only one written in pure JavaScript.
 
 ### Similar Projects
 
@@ -19,7 +19,7 @@ Test it out [here](http://hiphipjorge.com/2014/jsass/)
 
 ### Project Scope
 
-- [ ] SASS Compiler
+- [ ] Sass Compiler
   - [x] CSS to CSS
     - [x] Output Styles
       - [x] Nested
